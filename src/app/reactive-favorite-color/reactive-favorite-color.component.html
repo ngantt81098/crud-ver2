@@ -1,0 +1,43 @@
+<hr>    
+{{ diagnostic }}
+<div class="container">
+    <h2>Reactive form</h2>
+    <form [formGroup]="heroForm" [hidden]="formDir.submitted">
+        <div class="cross-validation" [class.cross-validation-error]="heroForm.errors?.identityRevealed && (heroForm.touched || heroForm.dirty)">
+            <div class="form-group">
+                <label for="ten">Tên</label>
+                <input  id="ten" type="text" class="form-control" 
+                        formControlName="ten" required>
+                <div *ngIf="ten.invalid && (ten.dirty || ten.touched)" class="alert alert-danger">
+                    <div *ngIf="ten.errors.required">
+                        Nhập tên tướng.
+                    </div>
+                    <div *ngIf="ten.errors.minlength">
+                        Tên tướng phải có ít nhất 4 ký tự. 
+                    </div>
+                    <div *ngIf="ten.errors.forbiddenName">
+                        Tên tướng {{tuong.ten}} đã có
+                    </div>
+                    <!-- <div *ngIf></div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kyNang">Kỹ năng</label>
+                <select id="kyNang" class="form-control"
+                        formControlName="kyNang" required>
+                    <option *ngFor="let k of danhSachKyNang" [value]="k"> {{ k }} </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mau">Máu</label>
+                <input  id="mau" type="text" class="form-control"
+                        formControlName="mau" required>
+                <div *ngIf="mau.invalid && (mau.dirty || mau.touched)" class="alert alert-danger">
+                    <div *ngIf="mau.errors.required">
+                        Nhập bình máu.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

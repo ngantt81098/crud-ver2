@@ -1,0 +1,40 @@
+<div class="col-md-5">
+  <!-- <form action="">
+    <div class="form-group">
+      <label>Tên tướng:</label>
+      <input class="form-control" #ten/>
+    </div>
+    <div class="form-group">
+       <label>Kĩ năng:</label>
+       <input class="form-control" #kyNang/>
+    </div>
+    <div class="form-group">
+        <label>Máu:</label>
+        <input class="form-control" #mau/>
+    </div>
+    <button (click)="add(ten.value); ten.value=''">
+      Thêm mới
+    </button>
+  </form> -->
+  
+  <!-- (click) passes input value to add() and then clears the input -->
+  
+</div>
+
+<table>
+    <tr>
+      <th>STT</th>
+      <th>Tên</th>
+      <th>Kỹ năng</th>
+      <th>Máu</th>
+      <th>Ảnh</th>
+    </tr>
+    <tr *ngFor="let tuong of danhSachTuongLienMinh">
+      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.id }}</a> </td>
+      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.ten }}</a> </td> 
+      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.kyNang }}</a> </td> 
+      <td>{{ tuong.mau }}</td> 
+      <td> <a routerLink="/tuongs/{{ tuong.id }}"><img class="autoResizeImage" src="../../assets/images/{{tuong.anh}}.png" alt=""></a> </td> 
+    </tr>
+</table>
+

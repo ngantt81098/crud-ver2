@@ -1,0 +1,26 @@
+<div *ngIf="tuong">
+    <form [formGroup]="tuongForm">
+        <h2>Xem thông tin tướng: {{ tuong.ten }}</h2>
+        <div><span>id: </span>{{ tuong.id }}</div>
+        <div>
+            <label for="">Họ Tên: </label> 
+            <input formControlName="ten" type="text" value="{{ tuong.ten }}"/>
+        </div>
+        <div>
+            <label for="">Kĩ năng: </label>
+            <select name="kyNang" id="" formControlName="kyNang">
+                <option *ngFor="let kyNang of danhSachKyNang" [value]="kyNang"> {{ kyNang }}</option>
+            </select>
+        </div>
+        <div>
+            <label for="">Máu: </label>
+            <input formControlName = "mau" type="text" value="{{ tuong.mau }}" >
+        </div>
+        <div>
+            <label for="">Ảnh đại diện: </label> <img src="../../assets/images/{{tuong.anh}}.png" alt="">
+        </div>
+    </form>    
+</div> 
+<br>
+<button (click) = "updateTuong(tuongForm.value)">Sửa thông tin tướng</button>
+<button (click) = "deleteTuong(tuongForm.value)">Xóa tướng</button>

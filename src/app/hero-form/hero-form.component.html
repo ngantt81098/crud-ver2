@@ -1,0 +1,64 @@
+<!-- Start template-driven form-->
+{{diagnostic}}
+<div class="container">
+    <h1>Tướng Form</h1>
+    <form [formGroup]="tuongForm" class="col-md-5">
+        <div [hidden]="tuongForm.submitted">
+            <div class="cross-validation">
+                
+                <div class="form-group">
+                    <label for="">Id</label>
+                    <input formControlName="id" class="form-control" type="number" name="id" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Tên tướng</label>
+                    <input formControlName="ten" class="form-control" name="ten" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kyNang">Kĩ năng tướng</label>
+                    <select id="kyNang" name="kyNang" class="form-control" formControlName="kyNang"
+                            required>
+                        <option *ngFor="let kyNang of danhSachKyNang" [value]="kyNang"> {{ kyNang }} </option>
+                    </select>
+                    <!-- Control has been changed and valid -->
+                    <div *ngIf="kyNang.errors && kyNang.touched" class="alert alert-danger">
+                        <div *ngIf="kyNang.errors.required">
+                            Nhập kỹ năng của tướng.
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="mau">Bình máu</label>
+                    <input formControlName="mau" class="form-control" name="mau" required>
+                    <div *ngIf="mau.errors && mau.touched" class="alert alert-danger">
+                        <div *ngIf="mau.errors.required">
+                            Nhập bình máu.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mau">Avartar</label> 
+                </div>
+
+                <button type="submit" class="btn btn-success"
+                [disabled]="tuongForm.invalid" (click)="add(tuongForm.value)">Submit</button>
+                <button type="button" class="btn btn-default"
+                (click)="tuongForm.resetForm({})">Reset</button>
+
+                <div class="submitted-message" *ngIf="tuongForm.submitted">
+                    <p>You've submitted your hero, {{ tuongForm.value }}!</p>
+                    <button (click)="tuongForm.resetForm({})">Add new hero</button>
+                </div>
+            </div>
+        </div>        
+    </form>    
+</div>        
+<!-- End -->
+    
+
+
+
