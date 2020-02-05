@@ -14,6 +14,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageServiceModule } from 'angular-webstorage-service';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StorageServiceModule } from 'angular-webstorage-service';
     IdentityRevealedValidatorDirective,
     ReactiveFavoriteColorComponent,
     NavigationComponent,
-    HeroDetailComponent
+    HeroDetailComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

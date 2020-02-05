@@ -1,0 +1,13 @@
+.container.nav.nav-tabs {
+    background-color: #f3f3f3;
+}
+
+.active {
+    background-color: #008CBA;
+    color: white;
+}
+
+nav-item:hover {
+    background-color: #008CBA;
+    color: white;
+}

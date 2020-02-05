@@ -6,10 +6,10 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 const routes: Routes = [
   { path: 'tuongs', component: ListComponent },
-  { path: 'tuongs/new', component: HeroFormComponent },
-  { path: 'tuongs/:id', component: HeroDetailComponent }, 
-  { path: 'tuongs/edit', component: HeroDetailComponent },
-  { path: 'tuongs/delete', component: HeroDetailComponent }
+  { path: 'tuong/new', component: HeroFormComponent },
+  { path: 'tuong/:id', component: HeroDetailComponent }, 
+  { path: 'tuong/edit', component: HeroDetailComponent },
+  { path: 'tuong/delete', component: HeroDetailComponent }
 ];
 
 @NgModule({

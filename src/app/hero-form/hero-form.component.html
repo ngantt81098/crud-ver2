@@ -9,11 +9,21 @@
                 <div class="form-group">
                     <label for="">Id</label>
                     <input formControlName="id" class="form-control" type="number" name="id" required>
+                    <div *ngIf="id.errors && id.touched" class="alert alert-danger">
+                        <div *ngIf="id.errors.required">
+                            Nhập kỹ năng của tướng.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="">Tên tướng</label>
                     <input formControlName="ten" class="form-control" name="ten" required>
+                    <div *ngIf="ten.errors && ten.touched" class="alert alert-danger">
+                        <div *ngIf="ten.errors.required">
+                            Nhập kỹ năng của tướng.
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">

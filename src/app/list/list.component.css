@@ -1,4 +1,6 @@
 table {
+    margin-top: 20px;
+    margin-left: 16px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -10,11 +12,12 @@ table {
     padding: 8px;
   }
   
-  tr:nth-child(even) {
-    background-color: #dddddd;
+  th {
+    text-align: center;
+    background-color: #f1f1f1;
   }
   .autoResizeImage {
-    max-width: 25%;
+    max-width: 12%;
     height: auto;
     width: auto;
 }

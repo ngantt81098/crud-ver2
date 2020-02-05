@@ -12,11 +12,13 @@ import { HeroService } from '../hero.service';
 export class HeroFormComponent implements OnInit {
   constructor(
     private heroService: HeroService,
+    // private messageService: messageService
   ) { }
   json;
   danhSachKyNang = ['Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 'Cái nhìn hóa đá'];
   tuongForm: FormGroup;
-
+  message;
+  
   tuong = {id: 12, ten: 'Cassiopeia', kyNang: this.danhSachKyNang[6], mau: '6 (+0.5 mỗi cấp) ', anh: 'Cassiopeia'};
 
   ngOnInit(): void {
@@ -33,6 +35,9 @@ export class HeroFormComponent implements OnInit {
 
   tuong1 = this.danhSachTuong[0];
   
+  get id() {
+    return this.tuongForm.get('id'); }
+
   get ten() { return this.tuongForm.get('ten'); }
 
   get kyNang() { return this.tuongForm.get('kyNang'); }
@@ -50,8 +55,12 @@ export class HeroFormComponent implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model)};
 
-  add(val) {  
-    this.heroService.addTuong(val);
+  add(tuong) : void {  
+    this.heroService.addTuong(tuong).subscribe(value => console.log(value));
+  }
+
+  private log(message: string){
+
   }
 
 }

@@ -18,16 +18,15 @@ export class HeroDetailComponent implements OnInit {
   tuongForm: FormGroup;
   ngOnInit() {   
     return this.getTuong();
-
   }
 
   /**
-   * Get @param: id 
-   * of hero for view detail information of a hero
+   * return a observable
    */
-  getTuong(){
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.tuong = this.heroService.getTuong(id);
+  getTuong() : void{
+    const tuongId = +this.route.snapshot.paramMap.get('id');
+    this.heroService.getTuong(tuongId).subscribe(tuong => this.tuong = tuong);
+    
     this.tuongForm = new FormGroup({
       'id' : new FormControl(this.tuong.id),
       'ten' : new FormControl(this.tuong.ten),
@@ -35,15 +34,14 @@ export class HeroDetailComponent implements OnInit {
       'mau' : new FormControl(this.tuong.mau),
       'anh' : new FormControl(this.tuong.anh)
     });
-    return this.tuong;
   }
 
-  updateTuong(value){
-    const id = +this.route.snapshot.paramMap.get('id');    
-    return this.heroService.updateTuong(value);
+  updateTuong(tuong) : void {
+    const id = +this.route.snapshot.paramMap.get('id'); 
+    this.heroService.updateTuong(tuong);
   }
 
-  deleteTuong(value){
-    this.heroService.deleteTuong(value);
+  deleteTuong(tuong){
+    this.heroService.deleteTuong(tuong);
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TUONG } from '../danhSachTuong';
 import { HeroService } from '../hero.service';
-
+import { Observable, of } from 'rxjs';
+import { mergeMap, switchMap, retry, 
+  map, catchError, filter, scan } from 'rxjs/operators'; 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -11,27 +12,13 @@ export class ListComponent implements OnInit {
 
   constructor(private heroService: HeroService) {
   }
+
   danhSachTuongLienMinh;
-  selectedTuong : ApiModel.Tuong;
   ngOnInit() {
-    this.getEntities();
+    this.getTuongs();
   }
 
-  getEntities() {
-    this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
-    return this.danhSachTuongLienMinh;
-    // if(jsonValue) {
-    //   return JSON.parse(jsonValue);
-    // }
+  getTuongs() : void {
+    this.heroService.getTuongs().subscribe(tuongs => this.danhSachTuongLienMinh = tuongs);
   }
-
-  onSelect(tuong: ApiModel.Tuong): void {
-    this.selectedTuong = tuong;
-  }
-
-  add(ten: string): void {
-    ten = ten.trim();
-    // this.heroService.themTuong(ten);
-  }
-
 }

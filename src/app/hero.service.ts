@@ -1,26 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Tuong } from './hero';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { TUONG } from './danhSachTuong';
 import { MessageService } from './message.service';
-
+import { Observable, of } from 'rxjs'; 
+import { Tuong } from './hero';
+import { catchError, map, tap } from 'rxjs/operators';
+// import { NotifierService } from 'angular-notifier';
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
   json;
   result;
+  danhSachTuongLienMinh;
+  consequence;
   constructor(
-    private http: HttpClient,
-    private messageService: MessageService
-  ) { }
+      private http: HttpClient,
+      private messageService: MessageService,
+      // private notifier: NotifierService
+  ) {
+    // this.notifier = notifier;
+  }
+  
+  getTuongs() : Observable<ApiModel.Tuong[]> {
+    this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
 
-  /**
-   * Get hero by id : READ
-   */
-  getTuong(tuongId: number) {
+    this.logMessage("Xem danh sách tướng thành công");
+
+    return of(this.danhSachTuongLienMinh);
+  }
+
+  getTuong(tuongId: number) : Observable<ApiModel.Tuong> {
     
     //get tuongs from local storage
     var total = JSON.parse(localStorage.getItem('angular.heroes'));
@@ -28,46 +37,40 @@ export class HeroService {
     //tim id cua tuong trong danh sach tuong tra ve 
     for(let i=0; i<total.length; i++){
       
-      if (total[i].id == tuongId) {
-        return this.result = total[i];
+      if (total[i].id == tuongId) {        
+        this.result = total[i];
+        return of(this.result = total[i]);
       }
     }
   }
 
-  /**
-   * Update new hero : UPDATE
-   * Get hero id + update form into local storage
-   */
-  updateTuong(value) {
+  updateTuong(tuong): Observable<any> {
 
     //get tuongs from local storage
     var total = JSON.parse(localStorage.getItem('angular.heroes'));
 
     // Get hero infor by id + update the info with input form
     for(let i=0; i<total.length; i++){
-      if (total[i].id == value.id) {
-        total[i] = value; 
+      if (total[i].id == tuong.id) {
+        total[i] = tuong; 
 
         // update data into local storage by getting data from an input form
         localStorage.setItem('angular.heroes', JSON.stringify(total));
+        return of(tuong).pipe(
+          tap(_ => console.log(tuong)),
+          catchError(tuong)
+        );
       }
     }    
   }
 
-  /**
-   * Add tuong CREATE
-   * @param operation 
-   * @param result 
-   */
-  addTuong(val) {
+  addTuong(tuong: ApiModel.Tuong): Observable<ApiModel.Tuong> {
     this.json = JSON.parse(localStorage.getItem('angular.heroes'));
-    this.json.push(val);
-    localStorage.setItem('angular.heroes', JSON.stringify(this.json));
+    this.json.push(tuong);
+    of(localStorage.setItem('angular.heroes', JSON.stringify(this.json)));
+    return of(tuong);
   }
 
-  /**
-   * Delete hero
-   */
   deleteTuong(value) {
     //get tuongs from local storage
     var total = JSON.parse(localStorage.getItem('angular.heroes'));
@@ -81,12 +84,11 @@ export class HeroService {
       }
     }
   }
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
+
+  public logMessage(message: string) {
+    this.messageService.add(`Thông báo: ${message}`);
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
@@ -94,17 +96,13 @@ export class HeroService {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.logMessage(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
-  }
-
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
-  }
-   
+  // public showNotification(type: string, message: string) {
+  //   this.notifier.notify( type, message );
+  // }
 }
-
+}
