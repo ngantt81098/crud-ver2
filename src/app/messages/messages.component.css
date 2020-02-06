@@ -1,6 +1,16 @@
 .messages {
-    border: 2px solid gray;
+    border: 1px solid #dddddd;
     border-radius: 8px;
     margin-top: 10px;
     margin-left: 16px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    /* overflow: auto; */
 }
+
+button {
+    float: right;
+    padding-right: 10px;
+}
+

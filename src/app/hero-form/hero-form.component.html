@@ -57,7 +57,7 @@
                 <button type="submit" class="btn btn-success"
                 [disabled]="tuongForm.invalid" (click)="add(tuongForm.value)">Submit</button>
                 <button type="button" class="btn btn-default"
-                (click)="tuongForm.resetForm({})">Reset</button>
+                (click)="tuongForm.resetForm()">Reset</button>
 
                 <div class="submitted-message" *ngIf="tuongForm.submitted">
                     <p>You've submitted your hero, {{ tuongForm.value }}!</p>

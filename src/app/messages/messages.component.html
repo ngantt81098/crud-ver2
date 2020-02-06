@@ -1,7 +1,16 @@
-<div class="messages" *ngIf="messageService.message.length">
-    <h2>Thông báo</h2>
-    <button class="clear" (click)="messageService.clear()">
-        clear
-    </button>
-    <div>{{ messsage }}</div>
-</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="messages" *ngIf="messageService.message.length">
+        <div *ngFor='let message of messageService.message'>{{ message }}</div>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="messageService.clear()">Hủy bỏ thông báo</button>
+    </div>
+</body>
+</html>

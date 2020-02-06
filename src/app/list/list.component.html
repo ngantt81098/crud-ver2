@@ -23,18 +23,18 @@
 
 <table>
     <tr>
-      <th>STT</th>
+      <th>Id</th>
       <th>Tên</th>
       <th>Kỹ năng</th>
       <th>Máu</th>
       <th>Ảnh</th>
     </tr>
     <tr *ngFor="let tuong of danhSachTuongLienMinh">
-      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.id }}</a> </td>
-      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.ten }}</a> </td> 
-      <td> <a routerLink="/tuongs/{{ tuong.id }}">{{ tuong.kyNang }}</a> </td> 
+      <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.id }}</a> </td>
+      <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.ten }}</a> </td> 
+      <td> {{ tuong.kyNang }} </td> 
       <td>{{ tuong.mau }}</td> 
-      <td> <a routerLink="/tuongs/{{ tuong.id }}"><img class="autoResizeImage" src="../../assets/images/{{tuong.anh}}.png" alt=""></a> </td> 
+      <td> <a routerLink="/tuong/{{ tuong.id }}"><img class="autoResizeImage" src="../../assets/images/{{tuong.anh}}.png" alt=""></a> </td> 
     </tr>
 </table>
 

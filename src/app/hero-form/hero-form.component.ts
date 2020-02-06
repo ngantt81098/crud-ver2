@@ -15,11 +15,14 @@ export class HeroFormComponent implements OnInit {
     // private messageService: messageService
   ) { }
   json;
-  danhSachKyNang = ['Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 'Cái nhìn hóa đá'];
+  danhSachKyNang = [
+                    'Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 
+                    'Cái nhìn hóa đá', 'Siêu Bom Địa Ngục', 'Chuyển Hóa Năng Lượng'
+                  ];
   tuongForm: FormGroup;
   message;
   
-  tuong = {id: 12, ten: 'Cassiopeia', kyNang: this.danhSachKyNang[6], mau: '6 (+0.5 mỗi cấp) ', anh: 'Cassiopeia'};
+  tuong = {id: 11, ten: 'Ziggs', kyNang: this.danhSachKyNang[7], mau: '689 (+0.5 mỗi cấp) ', anh: 'Ziggs'};
 
   ngOnInit(): void {
     this.tuongForm = new FormGroup({
@@ -59,6 +62,10 @@ export class HeroFormComponent implements OnInit {
     this.heroService.addTuong(tuong).subscribe(value => console.log(value));
   }
 
+  private resetForm() {
+    this.tuongForm.reset();
+  }
+  
   private log(message: string){
 
   }

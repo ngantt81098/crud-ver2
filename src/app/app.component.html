@@ -7,31 +7,14 @@
 </head>
 <body>
   <div class="container">
+
     <app-navigation></app-navigation>
     
     <router-outlet></router-outlet>
 
     <app-messages></app-messages>
-    <h5>Nút này để test localStorage</h5>
-    <button (click)="(save())">Insert</button>
-    <button (click)="(getFromLocal(1))">Get</button>
 
-    <h5>Nút này để test tạo mới hero</h5>
-    <button (click)="(insertEntity())">Create</button>
-    <hr>
-    <div>
-      <input type="text" id="yourname" placeholder="Type your name here"/>
-    </div>
   </div>
-
-<!-- <ul *ngFor = "let data of httpdata">
-  <li>Name: {{data.name}} Address: {{ data.address.city }}</li>
-</ul> -->
-  <!-- <app-list></app-list> -->
-  
-  <!-- <app-hero-form></app-hero-form>
-  <app-reactive-favorite-color></app-reactive-favorite-color> -->
-
 
 </body>
 </html>

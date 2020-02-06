@@ -3,28 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { timer, Observable } from 'rxjs';
 import { of } from 'rxjs';
-
+import { HeroService } from './hero.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
-  // _available = storageAvailable();
-
-  constructor (private http: HttpClient, @Inject(LOCAL_STORAGE) private storage: WebStorageService) {
-    const arr = [1,2,3];
-
-    // const ret = this.getDetail();
-    // console.log('before subscribe');
-    // this.observable.subscribe({
-    //   next: val => console.log('next: ' + val),
-    //   error: err => console.error('error' + err),
-    //   complete: () => console.log('done'),
-    // });
-    // console.log('after subscribe');
-  };
-
+export class AppComponent implements AfterContentInit {
   httpdata;
   data;
   json;
@@ -39,39 +24,24 @@ export class AppComponent implements AfterViewInit {
     {"id": "8", "ten": "Fizz", "kyNang": "Chiến binh lanh lợi, đâm lao", "mau": "8.7 (+0.7 mỗi cấp)", "anh": "Fizz"},
     {"id": "9", "ten": "Ngộ Không", "kyNang": "Cân đẩu vân", "mau": "6.65 (+0.65 mỗi cấp)", "anh": "MonkeyKing"},
     {"id": "10", "ten": "Olaf", "kyNang": "Phóng rìu, Điên cuồng", "mau": "8.041(+0.575 mỗi cấp)", "anh": "Olaf"},
-    ];
-  ngOnInit() {
-    // this.http.get("http://jsonplaceholder.typicode.com/users").subscribe((data) => this.displaydata(data));
+  ];
+
+  constructor (
+      private http: HttpClient, 
+      @Inject(LOCAL_STORAGE) 
+      private storage: WebStorageService,
+      private heroService: HeroService
+    ) {
+    const arr = [1,2,3];
+    this.heroService;
+    
+  };
+
+  ngAfterContentInit() {
+    console.log(`alo ha`);
+    this.save();
   }
 
-  ngAfterViewInit() {
-    const ESC_KEY = 27;
-    const nameInput = document.getElementById('yourname') as HTMLInputElement;
-    this.fromEvent(nameInput, 'keydown')
-    .subscribe((e: KeyboardEvent) => {
-      if (e.keyCode === ESC_KEY) {
-        nameInput.value = '';
-      }
-    });
-  }
-
-  fromEvent(target: HTMLInputElement, eventName: string) {
-    return new Observable((observer) => {
-      const handler = (e: unknown) => {
-        observer.next(e);
-      } 
-      target.addEventListener(eventName, handler);
-      
-      return () => {
-        target.removeEventListener(eventName, handler);
-      };
-    });
-  }
-
-  displaydata(data) {this.httpdata = data;}
-  title = '1st app';
-
-  obj = JSON.parse('{ "name": "John" }');
   /**
    * Database
    */
@@ -93,7 +63,8 @@ export class AppComponent implements AfterViewInit {
    * @param key 
    */
   getFromLocal(key): void {
-    this.data[key]= localStorage.getItem(key);      
+    this.data[key]= localStorage.getItem(key);    
+    console.log(this.data[key]);  
   }
   
   /**
@@ -106,33 +77,4 @@ export class AppComponent implements AfterViewInit {
     this.json.push({"id": "11", "ten": "HCM", "kyNang": "Giải phóng dân tộc", "mau": "8.041(+0.575 mỗi cấp)", "anh": "hcm"});
     localStorage.setItem('angular.heroes', JSON.stringify(this.json));
   }
-
-  /**
-  *  Update hero
-  */
-
-  /**
-   * Delete hero
-   */
-  
-  /**
-   * Observe with subscribe() function
-   */ 
-
-  // getDetail() {
-  //   console.log('hello im getDetail()');
-  //   return 100;
-  // }
-
-  // observable = Observable.create(function (observer) {
-  //     console.log('Rxjs và Reactive Programming');
-  //     observer.next(1);
-  //     observer.next(2);
-  //     observer.next(3);
-  //     setTimeout(() => {
-  //     observer.next(4);
-  //     observer.complete();
-  //     }, 1000);
-  //     console.log('xin chào chị Ngân hehe');
-  // });
   }

@@ -4,6 +4,7 @@ import { MessageService } from './message.service';
 import { Observable, of } from 'rxjs'; 
 import { Tuong } from './hero';
 import { catchError, map, tap } from 'rxjs/operators';
+import { isStorageAvailable } from 'angular-webstorage-service';
 // import { NotifierService } from 'angular-notifier';
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,32 @@ export class HeroService {
   result;
   danhSachTuongLienMinh;
   consequence;
+  _available = this.storageAvailable();
   constructor(
       private http: HttpClient,
       private messageService: MessageService,
-      // private notifier: NotifierService
   ) {
-    // this.notifier = notifier;
   }
-  
+
   getTuongs() : Observable<ApiModel.Tuong[]> {
-    this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
-
-    this.logMessage("Xem danh sách tướng thành công");
-
-    return of(this.danhSachTuongLienMinh);
+    if (this._available !== null) {
+      // Yippee! We can use localStorage awesomeness 
+      this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
+      this.logMessage(`Xem danh sách tướng thành công!`);
+      return of(this.danhSachTuongLienMinh);
+    }
+    else if (this._available === null) {
+      // Too bad, no localStorage for us 
+      this.logMessage(`Local Storage rỗng`);
+    }
   }
 
   getTuong(tuongId: number) : Observable<ApiModel.Tuong> {
-    
+    if (this._available !== null) {
     //get tuongs from local storage
-    var total = JSON.parse(localStorage.getItem('angular.heroes'));
+    let total = JSON.parse(localStorage.getItem('angular.heroes'));
+    
+    this.logMessage(`Chi tiết tướng tên:`);
 
     //tim id cua tuong trong danh sach tuong tra ve 
     for(let i=0; i<total.length; i++){
@@ -42,6 +49,11 @@ export class HeroService {
         return of(this.result = total[i]);
       }
     }
+    }
+    else if (this._available === null) {
+      this.logMessage(`Local Storage rỗng`);
+    }
+
   }
 
   updateTuong(tuong): Observable<any> {
@@ -101,8 +113,19 @@ export class HeroService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
   // public showNotification(type: string, message: string) {
   //   this.notifier.notify( type, message );
   // }
-}
+
+  //check localStorage is available
+  private storageAvailable() {
+    if (localStorage.getItem('angular.heroes') === null) {
+      return null;
+    }
+    else {
+      this.logMessage(`Xin chào!`);
+    }
+  }
 }
