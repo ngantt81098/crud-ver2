@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { MessageService } from './message.service';
 import { Observable, of } from 'rxjs'; 
 import { catchError, map, tap } from 'rxjs/operators';
-// import { NotifierService } from 'angular-notifier';
 @Injectable({
     providedIn: 'root'
 })
@@ -17,15 +16,13 @@ export class HeroService {
         private messageService: MessageService,
     ) {
     }
-        
+
     getTuongs() : Observable<ApiModel.Tuong[]> {
-        return of(this.danhSachTuongLienMinh).pipe(
-            map(tuongs => this.danhSachTuongLienMinh = tuongs),
-            catchError(this.handleError<ApiModel.Tuong[]>('Danh Sách Tướng', []))
-        );
+        this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
+        return of(this.danhSachTuongLienMinh);
 
         // if (this._available != null) {
-        //     this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
+        //     
         //     this.logMessage(`Xem danh sách tướng thành công!`);
         //     return of(this.danhSachTuongLienMinh).pipe(
         //         map(tuongs => this.danhSachTuongLienMinh = tuongs),

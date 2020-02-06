@@ -7,16 +7,17 @@ import { HeroService } from '../hero.service';
     styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-    
+    danhSachTuongLienMinh;
     constructor(private heroService: HeroService) {
         this.heroService;
     }
-    
+
     ngOnInit() {
         this.getTuongs();
     }
     
     getTuongs() : void {
-        this.heroService.getTuongs().subscribe(tuongs => this.heroService.danhSachTuongLienMinh = tuongs);
+        // console.log(this.heroService.getTuongs().subscribe(tuongs => this.danhSachTuongLienMinh = tuongs));
+        this.heroService.getTuongs().subscribe(tuongs => this.danhSachTuongLienMinh = tuongs);
     }
 }
