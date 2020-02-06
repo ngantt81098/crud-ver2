@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Tuong } from '../hero';
 import { TUONG } from '../danhSachTuong';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HeroService } from '../hero.service';
@@ -19,6 +18,7 @@ export class HeroFormComponent implements OnInit {
                     'Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 
                     'Cái nhìn hóa đá', 'Siêu Bom Địa Ngục', 'Chuyển Hóa Năng Lượng'
                   ];
+
   tuongForm: FormGroup;
   message;
   
@@ -30,7 +30,7 @@ export class HeroFormComponent implements OnInit {
       'ten' : new FormControl(this.tuong.ten),
       'kyNang': new FormControl(this.tuong.kyNang),
       'mau' : new FormControl(this.tuong.mau),
-      'anh' : new FormControl(this.tuong.anh)
+      'anh' : new FormControl(this.tuong.anh),
     }); 
   }
 
@@ -42,21 +42,16 @@ export class HeroFormComponent implements OnInit {
     return this.tuongForm.get('id'); }
 
   get ten() { return this.tuongForm.get('ten'); }
-
   get kyNang() { return this.tuongForm.get('kyNang'); }
-
   get mau() { return this.tuongForm.get('mau'); }
-
   get anh() { return this.tuongForm.get('anh'); }
-
-  model = new Tuong(1, 'Valhein', this.danhSachKyNang[0], 'Veera');
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model)};
+  get diagnostic() { return JSON.stringify(this.tuong)};
 
   add(tuong) : void {  
     this.heroService.addTuong(tuong).subscribe(value => console.log(value));

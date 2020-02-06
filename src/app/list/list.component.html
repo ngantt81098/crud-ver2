@@ -1,3 +1,28 @@
+<div *ngIf = "danhSachTuongLienMinh; else notShow">
+    <table>
+        <tr>
+        <th>Id</th>
+        <th>Tên</th>
+        <th>Kỹ năng</th>
+        <th>Máu</th>
+        <th>Ảnh</th>
+        </tr>
+        <tr *ngFor="let tuong of danhSachTuongLienMinh">
+        <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.id }}</a> </td>
+        <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.ten }}</a> </td> 
+        <td> {{ tuong.kyNang }} </td> 
+        <td>{{ tuong.mau }}</td> 
+        <td> <a routerLink="/tuong/{{ tuong.id }}"><img class="autoResizeImage" src="../../assets/images/{{tuong.anh}}.png" alt=""></a> </td> 
+        </tr>
+    </table>
+</div>
+
+<ng-template #notShow>
+    <p>
+        No data in local storage
+    </p>
+</ng-template>
+
 <div class="col-md-5">
   <!-- <form action="">
     <div class="form-group">
@@ -18,23 +43,4 @@
   </form> -->
   
   <!-- (click) passes input value to add() and then clears the input -->
-  
 </div>
-
-<table>
-    <tr>
-      <th>Id</th>
-      <th>Tên</th>
-      <th>Kỹ năng</th>
-      <th>Máu</th>
-      <th>Ảnh</th>
-    </tr>
-    <tr *ngFor="let tuong of danhSachTuongLienMinh">
-      <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.id }}</a> </td>
-      <td> <a routerLink="/tuong/{{ tuong.id }}">{{ tuong.ten }}</a> </td> 
-      <td> {{ tuong.kyNang }} </td> 
-      <td>{{ tuong.mau }}</td> 
-      <td> <a routerLink="/tuong/{{ tuong.id }}"><img class="autoResizeImage" src="../../assets/images/{{tuong.anh}}.png" alt=""></a> </td> 
-    </tr>
-</table>
-

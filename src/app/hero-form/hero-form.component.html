@@ -1,5 +1,4 @@
 <!-- Start template-driven form-->
-{{diagnostic}}
 <div class="container">
     <h1>Tướng Form</h1>
     <form [formGroup]="tuongForm" class="col-md-5">
@@ -51,7 +50,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="mau">Avartar</label> 
+                    <label for="mau">Ảnh đại diện</label> 
+                    <input type="submit" formControlName="anh" class="form-control" name="avatar">
                 </div>
 
                 <button type="submit" class="btn btn-success"
