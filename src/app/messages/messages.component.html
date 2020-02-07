@@ -8,8 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="messages" *ngIf="messageService.message.length">
-        <div *ngFor='let message of messageService.message'>{{ message }}</div>
+    <div *ngIf="messageService.message.length">
+        <div *ngFor='let message of messageService.message' class="messages">
+            {{ message }}
+        </div>
         <button type="button" class="btn btn-secondary btn-sm" (click)="messageService.clear()">Hủy bỏ thông báo</button>
     </div>
 </body>

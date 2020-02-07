@@ -15,9 +15,9 @@ export class ListComponent implements OnInit {
     ngOnInit() {
         this.getTuongs();
     }
-    
+
     getTuongs() : void {
-        // console.log(this.heroService.getTuongs().subscribe(tuongs => this.danhSachTuongLienMinh = tuongs));
         this.heroService.getTuongs().subscribe(tuongs => this.danhSachTuongLienMinh = tuongs);
+        this.heroService.logMessage(`Xem danh sách tướng`);
     }
 }

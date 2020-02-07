@@ -15,6 +15,8 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { MessagesComponent } from './messages/messages.component';
+import { LocalStorageComponent } from './local-storage.component';
+import { HeroSkillsComponent } from './hero-skills/hero-skills.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { MessagesComponent } from './messages/messages.component';
     ReactiveFavoriteColorComponent,
     NavigationComponent,
     HeroDetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    LocalStorageComponent,
+    HeroSkillsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,7 @@ import { MessagesComponent } from './messages/messages.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StorageServiceModule  
+    StorageServiceModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

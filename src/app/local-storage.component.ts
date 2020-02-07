@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HeroService } from './hero.service';
+import { Component, AfterContentInit } from '@angular/core';
 
-@Injectable({
-    providedIn: 'root'
+@Component({
+  selector: '',
+  template: ``,
+  styles: []
 })
-export class LocalstorageService {
-    data;
-    json;
-
+export class LocalStorageComponent implements AfterContentInit {
     LOCAL_STORAGE = {
         KEY:    "angular.heroes",
         VALUE:  [
@@ -24,13 +22,13 @@ export class LocalstorageService {
         ]
     }
 
+    ngAfterContentInit() {
+        this.storageAvailable();
+    }
+
     _availableStorage = localStorage.getItem(this.LOCAL_STORAGE.KEY);
-    
-    constructor(private heroService: HeroService) { }
-    
-    //check localStorage is available
+
     storageAvailable() {
-        
         if( this.lsTest() === true ){
             this.save();
         }
@@ -42,7 +40,7 @@ export class LocalstorageService {
                 return true;
             }
             else {
-                this.heroService.logMessage(`Xin chào!`);
+                // this.heroService.logMessage(`Xin chào!`);
             }
         } catch(e) {
             return false;
@@ -50,20 +48,6 @@ export class LocalstorageService {
     }
 
     save(){
-        this.saveInLocal(this.LOCAL_STORAGE.KEY, JSON.stringify(this.LOCAL_STORAGE.VALUE));
-    };
-    
-    saveInLocal(key, val): void {
-        localStorage.setItem(key, val);
-    }
-    
-    getFromLocal(key): void {
-        this.data[key]= localStorage.getItem(key);    
-    }
-    
-    insertEntity() {  
-        this.json =  JSON.parse(localStorage.getItem(this.LOCAL_STORAGE.KEY));
-        this.json.push({"id": "11", "ten": "HCM", "kyNang": "Giải phóng dân tộc", "mau": "8.041(+0.575 mỗi cấp)", "anh": "hcm"});
-        localStorage.setItem(this.LOCAL_STORAGE.KEY, JSON.stringify(this.json));
+        localStorage.setItem(this.LOCAL_STORAGE.KEY, JSON.stringify(this.LOCAL_STORAGE.VALUE));
     }
 }

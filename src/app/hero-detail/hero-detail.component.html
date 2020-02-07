@@ -4,13 +4,14 @@
         <div><span>id: </span>{{ tuong.id }}</div>
         <div>
             <label for="">Họ Tên: </label> 
-            <input formControlName="ten" type="text" value="{{ tuong.ten }}"/>
+            <input formControlName="ten" type="text" value="{{ tuong.ten }}" #ten/>
         </div>
         <div>
             <label for="">Kĩ năng: </label>
-            <select name="kyNang" id="" formControlName="kyNang">
-                <option *ngFor="let kyNang of danhSachKyNang" [value]="kyNang"> {{ kyNang }}</option>
-            </select>
+            <!-- <select name="danhSachKyNang" id="" formControlName="kyNang">
+                <option *ngFor="let kyNang of danhSachKyNang" [value]="kyNang"> {{kyNang}}</option>
+            </select> -->
+            <input formControlname="kyNang" type="text" value="{{ tuong.kyNang }}">
         </div>
         <div>
             <label for="">Máu: </label>
@@ -21,6 +22,6 @@
         </div>
     </form>    
 </div> 
-<br>
-<button (click) = "updateTuong(tuongForm.value)">Sửa thông tin tướng</button>
-<button (click) = "deleteTuong(tuongForm.value)">Xóa tướng</button>
+
+<button (click) = "confirmUpdate(tuongForm.value)">Sửa</button>
+<button (click) = "confirmDelete(tuongForm.value)">Xóa</button>

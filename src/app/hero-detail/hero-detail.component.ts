@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule, Routes, RoutesRecognized } from '@angular/router';
 import { HeroService } from '../hero.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LocalstorageService } from '../localstorage.service';
+import { FormGroup, FormControl } from '@angular/forms';
+
+
 @Component({
     selector: 'app-hero-detail',
     templateUrl: './hero-detail.component.html',
@@ -10,26 +11,33 @@ import { LocalstorageService } from '../localstorage.service';
 })
 export class HeroDetailComponent implements OnInit {
     tuong : ApiModel.Tuong;
+    id = +this.route.snapshot.paramMap.get('id');
+
     constructor(
         private route: ActivatedRoute, 
         private heroService: HeroService,
-        private lsService: LocalstorageService
-        ) { 
-            this.lsService;
-        }
+        private router: Router
+        ) 
+    {}
         
-    danhSachKyNang = ['Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 'Cái nhìn hóa đá'];
+    danhSachKyNang = [
+                'Bão đạn', 'Kháng phép', 'Đường kiềm tuyệt diệt',
+                'Lửa hồ li', 'Hôn gió', 'Phi đao năm cánh', 'Nghiền nát', 'Băng tiễn',
+                'Chú tâm tiễn', 'Chiến binh lanh lợi', 'đâm lao', 'Cân đẩu vân',
+                'Phóng rìu', 'Điên cuồng', 'Ám khí', 'Lời nguyền tử vong', 'Mê hoặc', 'Cái nhìn hóa đá'
+            ];
     tuongForm: FormGroup;
     ngOnInit() {   
-        return this.getTuong();
+        this.getTuong();
     }
-    
-    /**
-    * return a observable
-    */
-    getTuong() : void{
-        const tuongId = +this.route.snapshot.paramMap.get('id');
-        this.heroService.getTuong(tuongId).subscribe(tuong => this.tuong = tuong);
+
+    getTuong() : void {
+        const tuongId = this.id;
+        this.heroService.getTuong(tuongId).subscribe( tuong => {
+            this.tuong = tuong,
+            this.heroService.logMessage(`Xem tướng: ${this.tuong.ten}`)
+            }
+        );
         
         this.tuongForm = new FormGroup({
             'id' : new FormControl(this.tuong.id),
@@ -40,13 +48,36 @@ export class HeroDetailComponent implements OnInit {
         });
     }
     
-    updateTuong(tuong) : void {
-        const id = +this.route.snapshot.paramMap.get('id'); 
-        this.heroService.updateTuong(tuong);
+    updateTuong (tuong: ApiModel.Tuong) : void {
+        this.heroService.updateTuong(tuong).subscribe(
+            tuong => 
+            {
+                this.tuong = tuong,
+                this.heroService.logMessage(`Sửa tướng: ${this.tuong.ten}`)
+            }
+        );
     }
-    
-    deleteTuong(tuong){
-        this.heroService.deleteTuong(tuong);
+
+    deleteTuong (tuong: ApiModel.Tuong){
+        this.heroService.deleteTuong(tuong).subscribe(
+            tuong => 
+            {
+                this.heroService.logMessage(`Xóa tướng: ${this.tuong.ten}`),
+                this.router.navigateByUrl('/tuongs');
+            }
+        );
+    }
+
+    confirmDelete (tuong: ApiModel.Tuong) {
+        if (confirm(`Xóa tướng ${tuong.ten}?`)) {
+            this.deleteTuong(tuong);
+        }
+    }
+
+    confirmUpdate (tuong: ApiModel.Tuong) {
+        if (confirm(`Cập nhật tướng ${tuong.ten}?`)) {
+            this.updateTuong(tuong);
+        }
     }
 }
     

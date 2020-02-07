@@ -1,47 +1,34 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, AfterContentInit } from '@angular/core';
 import { MessageService } from './message.service';
 import { Observable, of } from 'rxjs'; 
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { LocalStorageComponent } from './local-storage.component';
 @Injectable({
     providedIn: 'root'
 })
-export class HeroService {
-    json;
+export class HeroService extends LocalStorageComponent {
+    json = JSON.parse(this._availableStorage);
     result;
     danhSachTuongLienMinh;
     consequence;
+    tuong: ApiModel.Tuong;
+
     constructor(
-        private http: HttpClient,
         private messageService: MessageService,
     ) {
+        super();
     }
 
     getTuongs() : Observable<ApiModel.Tuong[]> {
-        this.danhSachTuongLienMinh = JSON.parse(localStorage.getItem('angular.heroes'));
+        this.danhSachTuongLienMinh = this.json;
         return of(this.danhSachTuongLienMinh);
-
-        // if (this._available != null) {
-        //     
-        //     this.logMessage(`Xem danh sách tướng thành công!`);
-        //     return of(this.danhSachTuongLienMinh).pipe(
-        //         map(tuongs => this.danhSachTuongLienMinh = tuongs),
-        //         catchError(this.handleError<ApiModel.Tuong[]>('Danh Sách Tướng', []))
-        //         );
-        //     }
-        // else if (this._available === undefined) {
-        //     this.logMessage(`Local Storage rỗng`);
-        // }
     }
 
     getTuong(tuongId: number) : Observable<ApiModel.Tuong> {
-        if (this._available !== null) {
-            //get tuongs from local storage
-            let total = JSON.parse(localStorage.getItem('angular.heroes'));
+        if (this._availableStorage !== null) {
+
+            let total = this.json;
             
-            this.logMessage(`Chi tiết tướng tên:`);
-            
-            //tim id cua tuong trong danh sach tuong tra ve 
             for(let i=0; i<total.length; i++){
                 
                 if (total[i].id == tuongId) {        
@@ -50,53 +37,44 @@ export class HeroService {
                 }
             }
         }
-        else if (this._available === null) {
-            this.logMessage(`Local Storage rỗng`);
+        else if (this._availableStorage === null) {
+            this.logMessage(`Local Storage rỗng, nhấn Ctrl + f5 để chèn data nhé`);
         }
     }
             
-    updateTuong(tuong): Observable<any> {
+    updateTuong(tuong: ApiModel.Tuong): Observable<any> {
         
-        //get tuongs from local storage
-        var total = JSON.parse(localStorage.getItem('angular.heroes'));
+        var total = this.json;
         
-        // Get hero infor by id + update the info with input form
         for(let i=0; i<total.length; i++){
             if (total[i].id == tuong.id) {
                 total[i] = tuong; 
                 
-            // update data into local storage by getting data from an input form
             localStorage.setItem('angular.heroes', JSON.stringify(total));
-            return of(tuong).pipe(
-                tap(_ => console.log(tuong)),
-                catchError(tuong)
-                );
+            return of(tuong);
             }
         }    
     }
                 
     addTuong(tuong: ApiModel.Tuong): Observable<ApiModel.Tuong> {
-        this.json = JSON.parse(localStorage.getItem('angular.heroes'));
+        this.json = this.json;
         this.json.push(tuong);
         of(localStorage.setItem('angular.heroes', JSON.stringify(this.json)));
         return of(tuong);
     }
         
-    deleteTuong(value) {
-        //get tuongs from local storage
-        var total = JSON.parse(localStorage.getItem('angular.heroes'));
-        
-        //tim id cua tuong trong danh sach tuong tra ve 
+    deleteTuong(tuong: ApiModel.Tuong) {
+        var total = this.json;
         for(let i=0; i<total.length; i++){
             
-            if (total[i].id == value.id) {
+            if (total[i].id == tuong.id) {
                 total.splice(i, 1);
-                localStorage.setItem('angular.heroes', JSON.stringify(total));
+                return of(localStorage.setItem('angular.heroes', JSON.stringify(total)));
             }
         }
     }
         
-    public logMessage(message: string) {
+    logMessage(message: string) {
         this.messageService.add(`Thông báo: ${message}`);
     }
         

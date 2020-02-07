@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TUONG } from '../danhSachTuong';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { HeroService } from '../hero.service';
-import { LocalstorageService } from '../localstorage.service';
 
 @Component({
     selector: 'app-hero-form',
@@ -10,30 +9,25 @@ import { LocalstorageService } from '../localstorage.service';
     styleUrls: ['./hero-form.component.css']
 })
 export class HeroFormComponent implements OnInit {
-    json;
+    tuong : ApiModel.Tuong;
     danhSachKyNang = [
         'Bão đạn', 'Ám khí', 'Lời nguyền tử vong', 'Hôn gió', 'Mê hoặc', 
         'Cái nhìn hóa đá', 'Siêu Bom Địa Ngục', 'Chuyển Hóa Năng Lượng'
     ];
-    tuong = {id: 11, ten: 'Ziggs', kyNang: this.danhSachKyNang[7], mau: '689 (+0.5 mỗi cấp) ', anh: 'Ziggs'};
+    tuong1 = {id: 11, ten: 'Ziggs', kyNang: this.danhSachKyNang[7], mau: '689 (+0.5 mỗi cấp) ', anh: 'Ziggs'};
     tuongForm: FormGroup;
     message;
 
-    constructor(
-        private heroService: HeroService,
-        private lsService: LocalstorageService
-        ) 
-    {
-        this.lsService.storageAvailable();
-    }
+    constructor( private heroService: HeroService ) 
+    {}
         
     ngOnInit(): void {
         this.tuongForm = new FormGroup({
-            'id' : new FormControl(this.tuong.id),
-            'ten' : new FormControl(this.tuong.ten),
-            'kyNang': new FormControl(this.tuong.kyNang),
-            'mau' : new FormControl(this.tuong.mau),
-            'anh' : new FormControl(this.tuong.anh),
+            'id' : new FormControl(this.tuong1.id),
+            'ten' : new FormControl(this.tuong1.ten),
+            'kyNang': new FormControl(this.tuong1.kyNang),
+            'mau' : new FormControl(this.tuong1.mau),
+            'anh' : new FormControl(this.tuong1.anh),
         }); 
     }
     
@@ -49,12 +43,15 @@ export class HeroFormComponent implements OnInit {
     
     onSubmit() { this.submitted = true; }
     
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.tuong)};
-    
     add(tuong) : void {  
-        this.heroService.addTuong(tuong).subscribe(value => console.log(value));
+        this.heroService.addTuong(tuong).subscribe(
+            tuong => {
+                this.tuong = tuong,
+                this.heroService.logMessage(`Thêm tướng: ${this.tuong.ten}`)
+            } 
+        );
     }
+
     private resetForm() {
         this.tuongForm.reset();
     }
