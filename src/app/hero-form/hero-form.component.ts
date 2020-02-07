@@ -31,8 +31,6 @@ export class HeroFormComponent implements OnInit {
         }); 
     }
     
-    danhSachTuong = TUONG;
-    
     get id() { return this.tuongForm.get('id'); }
     get ten() { return this.tuongForm.get('ten'); }
     get kyNang() { return this.tuongForm.get('kyNang'); }
@@ -50,12 +48,6 @@ export class HeroFormComponent implements OnInit {
                 this.heroService.logMessage(`Thêm tướng: ${this.tuong.ten}`)
             } 
         );
-    }
-
-    private resetForm() {
-        this.tuongForm.reset();
-    }
-    private log(message: string){
     }
 }
         

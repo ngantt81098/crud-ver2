@@ -57,12 +57,25 @@ export class HeroService extends LocalStorageComponent {
     }
                 
     addTuong(tuong: ApiModel.Tuong): Observable<ApiModel.Tuong> {
-        this.json = this.json;
-        this.json.push(tuong);
-        of(localStorage.setItem('angular.heroes', JSON.stringify(this.json)));
-        return of(tuong);
+        if (tuong.id != this.getTuongById(tuong.id).id) {
+            this.json.push(tuong);
+            of(localStorage.setItem('angular.heroes', JSON.stringify(this.json)));
+            return of(tuong);
+        } else {
+            this.logMessage(`Id ${tuong.id} đã tồn tại`);
+        }
     }
-        
+
+    getTuongById(tuongId) {
+        for(let i=0; i<this.json.length; i++){
+                
+            if (this.json[i].id == tuongId) {        
+                this.result = this.json[i];
+                return this.result = this.json[i];
+            }
+        }
+    }
+
     deleteTuong(tuong: ApiModel.Tuong) {
         var total = this.json;
         for(let i=0; i<total.length; i++){
