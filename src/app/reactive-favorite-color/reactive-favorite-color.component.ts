@@ -19,7 +19,7 @@ export class ReactiveFavoriteColorComponent implements OnInit {
       'ten' : new FormControl(this.tuong.ten, [
         Validators.required,
         Validators.minLength(4),
-        forbiddenNameValidator(forbiddenName/i)
+        forbiddenNameValidator(/bob/i)
       ]),
       'kyNang': new FormControl(this.tuong.kyNang, Validators.required),
       'mau': new FormControl(this.tuong.mau, Validators.required)
